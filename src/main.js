@@ -3,10 +3,30 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
-Vue.config.productionTip = false
+import axios from 'axios'
+
+import Antd from 'ant-design-vue'
+import 'ant-design-vue/dist/antd.css'
+
+import util from './utils'
+
+import VueCookies from 'vue-cookies'
+
+Vue.use(VueCookies);
+
+Vue.use(Antd);
+
+Vue.use(util);
+
+axios.defaults.withCredentials=true;
+
+Vue.prototype.$axios = axios;
+
+Vue.config.productionTip = false;
+
 
 new Vue({
   router,
   store,
   render: h => h(App)
-}).$mount('#app')
+}).$mount('#app');
