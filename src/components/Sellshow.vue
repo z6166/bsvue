@@ -1,24 +1,39 @@
 <template>
-    <a-table :columns="columns" :dataSource="data">
-        <div slot="state" slot-scope="text">
-            <a-icon v-if="text===1" style="color: green" type="check-circle" />
-            <a-icon v-else style="color: red" type="clock-circle" />
-        </div>
-        <div slot="bcom" slot-scope="text">
-            <a-icon v-if="text===1" style="color: green" type="check-circle" />
-            <a-icon v-else style="color: red" type="clock-circle" />
-        </div>
-        <div slot="scom" slot-scope="text,record">
-            <a-icon v-if="text===1" style="color: green" type="check-circle" />
-            <a v-else v-on:click='handlescom(record.orderid)'>确认发货</a>
-        </div>
-        <div slot="bookid" slot-scope="text">
-            <router-link :to="'/book/show/'+ text">前往</router-link>
-        </div>
-    </a-table>
+    <div>
+        <Othershow
+                v-if="this.visible"
+                :uid="this.nowid"
+                :visible="visible"
+                @cancel="closeother"></Othershow>
+        <a-table :columns="columns" :dataSource="data">
+            <div slot="buyerid" slot-scope="text">
+                <a @click="showModal(text)">买家</a>
+            </div>
+            <div slot="ordertime" slot-scope="text">
+                <p>{{getTime(text)}}</p>
+            </div>
+            <div slot="state" slot-scope="text">
+                <a-icon v-if="text===1" style="color: green" type="check-circle"/>
+                <a-icon v-else style="color: red" type="clock-circle"/>
+            </div>
+            <div slot="bcom" slot-scope="text">
+                <a-icon v-if="text===1" style="color: green" type="check-circle"/>
+                <a-icon v-else style="color: red" type="clock-circle"/>
+            </div>
+            <div slot="scom" slot-scope="text,record">
+                <a-icon v-if="text===1" style="color: green" type="check-circle"/>
+                <a v-else v-on:click='handlescom(record.orderid)'>确认发货</a>
+            </div>
+            <div slot="bookid" slot-scope="text">
+                <router-link :to="'/book/show/'+ text">前往</router-link>
+            </div>
+        </a-table>
+    </div>
 </template>
 
 <script>
+    import Othershow from "@/components/Othershow";
+
     const columns = [{
         title: '订单号',
         dataIndex: 'orderid',
@@ -33,13 +48,15 @@
         dataIndex: 'bookname',
         key: 'bookname',
     }, {
-        title: '买家id',
+        title: '买家',
         dataIndex: 'buyerid',
         key: 'buyerid',
+        scopedSlots: {customRender: 'buyerid'},
     }, {
         title: '下单时间',
         dataIndex: 'ordertime',
         key: 'ordertime',
+        scopedSlots: {customRender: 'ordertime'},
     }, {
         title: '买家确认收货',
         dataIndex: 'bcom',
@@ -58,8 +75,11 @@
     }];
     export default {
         name: 'sellshow',
+        components: {Othershow},
         data() {
             return {
+                nowid: "",
+                visible: false,
                 data: [],
                 columns,
             }
@@ -68,11 +88,19 @@
             this.sinit();
         },
         methods: {
-            handlescom(orderid){
+            showModal(id) {
+                this.nowid = id;
+                console.log(this.nowid);
+                this.visible = true;
+            },
+            closeother() {
+                this.visible = false;
+            },
+            handlescom(orderid) {
                 let data = new FormData();
                 data.append("orderid", orderid);
                 this.$axios
-                    .post(this.baseurl+"/api/scom",data)
+                    .post(this.baseurl + "/api/scom", data)
                     .then(
                         response => {
                             if (response.data.code === 0) {
@@ -87,7 +115,7 @@
             },
             sinit() {
                 this.$axios
-                    .get(this.baseurl+"/api/mysell")
+                    .get(this.baseurl + "/api/mysell")
                     .then(
                         response => {
                             if (response.data.code === 0) {

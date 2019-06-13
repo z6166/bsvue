@@ -11,7 +11,7 @@
                 :beforeUpload="beforeUpload"
                 @change="handleChange"
         >
-            <a-avatar v-if="this.data.face===''" :size="128">Undefined</a-avatar>
+            <a-avatar v-if="this.data.face===''" :size="128">点击上传头像</a-avatar>
             <a-avatar v-else :size=" 128" :src="this.data.face"/>
         </a-upload>
         <br/>
@@ -21,7 +21,7 @@
         <p>邮箱：{{ this.data.email }}</p>
         <br/>
         <div v-if="!editingname">
-            <p style="display:inline;" v-if="this.data.name!=''">昵称：{{this.data.name}} </p>
+            <p style="display:inline;" v-if="this.data.name!==''">昵称：{{this.data.name}} </p>
             <p style="display:inline;" v-else>昵称：Undefined </p>
             <a-icon @click="editname" type="edit"/>
         </div>
@@ -77,7 +77,7 @@
                                 this.$message.error(response.data.msg)
                             }
                         }
-                    )
+                    );
                 this.editingname = false;
             },
             cancelnewname(){
@@ -100,7 +100,7 @@
             },
             init() {
                 this.$axios
-                    .get(this.baseurl + "/api/userinfo")
+                    .get(this.baseurl + "/api/userinfo/" + this.$cookies.get("uid"))
                     .then(
                         response => {
                             if (response.data.code === 0) {
