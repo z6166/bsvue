@@ -143,7 +143,7 @@
                 e.preventDefault();
                 this.form.validateFields((err, values) => {
                     if (!err) {
-                        if(this.ordertype === '0' && len(values.address)<6){
+                        if(this.ordertype === '0' && values.address.length<6){
                             this.$message.error("请正确填写收货地址！");
                             return;
                         }
