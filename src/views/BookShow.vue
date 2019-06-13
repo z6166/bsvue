@@ -1,5 +1,10 @@
 <template>
     <div class="bookshow" :style="contentStyleObj">
+        <Othershow
+                v-if="this.visible"
+                :uid = "this.uid"
+                :visible="visible"
+                @cancel="closeother"></Othershow>
         <a-row>
             <a-col :span="8">
                 <a-card
@@ -28,11 +33,11 @@
                             <br/>
                             现价：{{ this.pricenow }}￥
                             <br/>
-                            卖家id：{{this.uid}}
-                            <br/>
                             类型：{{ this.category }}
                             <p v-if="this.state === 0">可购买</p>
                             <p v-else>已售出</p>
+                            <a @click="showModal()">卖家信息</a>
+                            <br/>
                             <a :href="this.bookurl">外部链接</a>
                         </template>
                     </a-card-meta>
@@ -71,10 +76,13 @@
 </template>
 
 <script>
+    import Othershow from "@/components/Othershow";
     export default {
         name: "BookShow",
+        components:{Othershow},
         data() {
             return {
+                visible:false,
                 imgStyle: {
                     height: ""
                 },
@@ -101,6 +109,13 @@
             this.getbookinfo();
         },
         methods: {
+            showModal() {
+                console.log(this.nowid);
+                this.visible = true;
+            },
+            closeother() {
+                this.visible = false;
+            },
             getbookinfo() {
                 this.$axios
                     .get(this.baseurl+"/book/show/" + this.$route.params.id)
