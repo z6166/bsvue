@@ -20,18 +20,29 @@
         <br/>
         <p>邮箱：{{ this.data.email }}</p>
         <br/>
-        <p style="display:inline;" v-if="this.data.name!=''">昵称：{{this.data.name}} </p>
-        <p style="display:inline;" v-else>昵称：Undefined </p>
-        <a>修改</a>
+        <div v-if="!editingname">
+            <p style="display:inline;" v-if="this.data.name!=''">昵称：{{this.data.name}} </p>
+            <p style="display:inline;" v-else>昵称：Undefined </p>
+            <a-icon @click="editname" type="edit"/>
+        </div>
+        <div v-else>
+            <a-input v-model="newname" @pressEnter="newnameevent" style="width: 30%">
+                <a-icon slot="suffix" @click="newnameevent" style="color: green" type="check" />
+                <a-icon slot="suffix" @click="cancelnewname" style="color: red;" type="close" />
+            </a-input>
+        </div>
     </div>
 </template>
 
 <script>
     import qiniu from 'qiniu';
+
     export default {
         name: "Userinfo",
         data() {
             return {
+                newname:"",
+                editingname: false,
                 formData: {
                     token: '',
                     mac: '',
@@ -48,17 +59,40 @@
         mounted() {
             this.init();
         },
-        created(){
+        created() {
             this.getToken();
         },
         methods: {
-            getToken(){
+            newnameevent(){
+                let data = new FormData();
+                data.append("newname", this.newname);
+                this.$axios
+                    .post(this.baseurl + "/api/changename", data)
+                    .then(
+                        response => {
+                            if (response.data.code === 0) {
+                                this.$message.success("更换昵称成功！");
+                                this.init();
+                            } else {
+                                this.$message.error(response.data.msg)
+                            }
+                        }
+                    )
+                this.editingname = false;
+            },
+            cancelnewname(){
+                this.editingname = false;
+            },
+            editname() {
+                this.editingname = true;
+            },
+            getToken() {
                 this.mac = new qiniu.auth.digest.Mac(this.accessKey, this.secretKey);
                 var options = {
                     scope: this.bucket,
                 };
                 var putPolicy = new qiniu.rs.PutPolicy(options);
-                var uploadToken=putPolicy.uploadToken(this.mac);
+                var uploadToken = putPolicy.uploadToken(this.mac);
                 console.log(uploadToken);
                 this.formData.token = uploadToken;
                 var config = new qiniu.conf.Config();
@@ -66,7 +100,7 @@
             },
             init() {
                 this.$axios
-                    .get(this.baseurl+"/api/userinfo")
+                    .get(this.baseurl + "/api/userinfo")
                     .then(
                         response => {
                             if (response.data.code === 0) {
@@ -77,7 +111,7 @@
                         }
                     )
             },
-            handleChange (info) {
+            handleChange(info) {
                 if (info.file.status === 'uploading') {
                     return
                 }
@@ -87,7 +121,7 @@
                     let data = new FormData();
                     data.append("imageUrl", this.imageUrl);
                     this.$axios
-                        .post(this.baseurl+"/api/changeface", data)
+                        .post(this.baseurl + "/api/changeface", data)
                         .then(
                             response => {
                                 if (response.data.code === 0) {
@@ -101,10 +135,10 @@
                 }
                 console.log(this.imageUrl);
             },
-            getUrl(key){
+            getUrl(key) {
                 this.imageUrl = "http://" + this.bucketManager.publicDownloadUrl(this.publicBucketDomain, key);
             },
-            beforeUpload (file) {
+            beforeUpload(file) {
                 const isJPG = file.type === 'image/jpeg';
                 if (!isJPG) {
                     this.$message.error('You can only upload JPG file!')
