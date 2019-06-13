@@ -88,6 +88,10 @@
             this.form.hideRequiredMark = true
         },
         mounted(){
+            if (!this.$cookies.isKey('token')) {
+                this.$message.error("请先登录系统！");
+                this.$router.push('/');
+            }
             this.bookinfo();
         },
         created(){
