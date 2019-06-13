@@ -191,6 +191,10 @@
                 this.bucketManager = new qiniu.rs.BucketManager(this.mac, config);
             },
             handleSubmit(e) {
+                if(this.loading){
+                    this.$message.error("请等待图片上传完毕！")
+                    return
+                }
                 e.preventDefault();
                 this.form.validateFields((err, values) => {
                     if (!err) {
@@ -225,10 +229,9 @@
                     return
                 }
                 if (info.file.status === 'done') {
-                    console.log(info.file.response);
                     this.getUrl(info.file.response.key);
+                    this.loading = false;
                 }
-                console.log(this.imageUrl)
             },
             getUrl(key){
                 this.imageUrl = "http://" + this.bucketManager.publicDownloadUrl(this.publicBucketDomain, key);

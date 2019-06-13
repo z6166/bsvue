@@ -14,8 +14,7 @@ export default{
                 (d.getMonth() + 1) + "-" +
                 (d.getDate()) + " " +
                 (d.getHours()) + ":" +
-                (d.getMinutes()) + ":" +
-                (d.getSeconds());
+                (d.getMinutes())
         };
         Vue.prototype.accessKey = 'c_z_GCgmtsRNcIZ3fHTY-1rv2Fwm4ZuRclHv3Nhs';
         Vue.prototype.secretKey = 'SUWR-z0HCx3ZOF2dPWbSP74LeLXP9e-GsHMvrfDY';

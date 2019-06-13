@@ -63,7 +63,7 @@
         key: 'bcom',
         scopedSlots: {customRender: 'bcom'},
     }, {
-        title: '卖家确认收货',
+        title: '卖家确认发货',
         dataIndex: 'scom',
         key: 'scom',
         scopedSlots: {customRender: 'scom'},

@@ -14,6 +14,9 @@
         </a-input-group>
         <br/>
         <a-table :columns="columns" :dataSource="data" :pagination="pagination">
+            <div slot="goto" slot-scope="record">
+                <router-link :to="'/book/show/'+ record.bookid">前往详情页</router-link>
+            </div>
             <div slot="pic" slot-scope="text">
                 <a-avatar size="large" shape="square" :src="text" />
             </div>
@@ -45,11 +48,18 @@
         title: '类别',
         dataIndex: 'category',
         key: 'category',
+    }, {
+        title: '价格',
+        dataIndex: 'pricenow',
+        key: 'pricenow',
     },{
         title: '',
         dataIndex: 'state',
         key: 'state',
         scopedSlots: {customRender: 'state'},
+    },{
+        title: '',
+        scopedSlots: {customRender: 'goto'},
     }];
     var Searchresult = [];
     export default {
