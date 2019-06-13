@@ -48,4 +48,6 @@ server {
         }
 }
 ```
+```
 sudo /etc/init.d/nginx restart
+```
