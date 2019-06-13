@@ -4,14 +4,22 @@
             <a-col :span="8">
                 <a-card
                         hoverable
-                        :bordered=false
-                        :hoverable=true
+                        :bordered=true
+                        :hoverable=false
                 >
                     <img
+                            v-if="this.pic_tmp"
                             :alt="this.bookname_tmp"
                             :src="this.pic_tmp"
                             slot="cover"
-                            style="height: 200px"
+                            :style="imgStyle"
+                    />
+                    <img
+                            v-else
+                            alt="暂无图片"
+                            src="http://psx59ycao.bkt.clouddn.com/35574339ab3c813.jpg"
+                            slot="cover"
+                            :style="imgStyle"
                     />
                     <a-card-meta
                             :title="this.bookname_tmp">
@@ -84,9 +92,13 @@
         },
         created(){
             this.contentStyleObj.width=window.screen.width/2-200+'px';
+            this.imgStyle.height = (window.screen.width / 2) / 4 + 'px';
         },
         data() {
             return {
+                imgStyle: {
+                    height: ""
+                },
                 contentStyleObj:{
                     width:'',
                     "margin":"auto"

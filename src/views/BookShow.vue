@@ -4,13 +4,21 @@
             <a-col :span="8">
                 <a-card
                         :bordered=true
-                        :hoverable=true
+                        :hoverable=false
                 >
                     <img
+                            v-if="this.pic !== ''"
                             :alt="this.bookname"
                             :src="this.pic"
                             slot="cover"
-                            style="height: 200px"
+                            :style="imgStyle"
+                    />
+                    <img
+                            v-else
+                            alt="暂无图片"
+                            src="http://psx59ycao.bkt.clouddn.com/35574339ab3c813.jpg"
+                            slot="cover"
+                            :style="imgStyle"
                     />
                     <a-card-meta
                             style="text-align:center;"
@@ -67,6 +75,9 @@
         name: "BookShow",
         data() {
             return {
+                imgStyle: {
+                    height: ""
+                },
                 contentStyleObj:{
                     width:'',
                     "margin":"auto"
@@ -84,6 +95,7 @@
         },
         created(){
             this.contentStyleObj.width=window.screen.width/2-200+'px';
+            this.imgStyle.height = (window.screen.width / 2) / 4 + 'px';
         },
         mounted() {
             this.getbookinfo();
