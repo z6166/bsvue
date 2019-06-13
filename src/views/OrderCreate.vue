@@ -151,7 +151,7 @@
                         let data = new FormData();
                         data.append("bookid", this.$route.params.id);
                         data.append("ordertype", this.ordertype);
-                        if(this.ordertype === 0){
+                        if(this.ordertype === '0'){
                             data.append("address", values.address);
                         }
                         this.$axios
