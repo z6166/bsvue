@@ -15,21 +15,27 @@
                     个人信息
                 </a-menu-item>
                 <a-menu-item key="1">
+                    <a-icon type="message"/>
+                    消息
+                    <a-badge :count="this.unread">
+                    </a-badge>
+                </a-menu-item>
+                <a-menu-item key="2">
                     <a-icon type="wallet" />
                     我买到的
                 </a-menu-item>
-                <a-menu-item key="2">
+                <a-menu-item key="3">
                     <a-icon type="wallet" />
                     我卖出的
                 </a-menu-item>
                 <a-sub-menu key="sub1">
                     <span slot="title"><a-icon type="bars"/><span>菜单</span></span>
-                    <a-menu-item key="3">
+                    <a-menu-item key="4">
                         <a-icon type="search"/>
                         发布图书
                     </a-menu-item>
                 </a-sub-menu>
-                <a-menu-item key="4">
+                <a-menu-item key="5">
                     <a-icon type="setting"/>
                     设置
                 </a-menu-item>
@@ -48,11 +54,13 @@
     import Websetting from "../components/Websetting.vue";
     import Ordershow from "../components/Ordershow"
     import Sellshow from "../components/Sellshow"
+    import Message from "../components/Message"
 
     export default {
         name: 'user',
         components: {
             Userinfo,
+            Message,
             Ordershow,
             Sellshow,
             Bookadd,
@@ -60,10 +68,12 @@
         },
         data() {
             return {
+                unread:"",
                 stockid:null,
                 current: '0',
                 arr: [
                     'Userinfo',
+                    'Message',
                     "Ordershow",
                     "Sellshow",
                     'Bookadd',
@@ -76,6 +86,7 @@
                 this.$message.error("请先登录系统！");
                 this.$router.push('/');
             }
+            this.getmesasge()
         },
         computed: {
             currentView() {
@@ -83,6 +94,20 @@
             }
         },
         methods: {
+            getmesasge(){
+                this.$axios
+                    .get("http://"+this.baseurl+"/api/msgcount")
+                    .then(
+                        response => {
+                            if (response.data.code === 0) {
+                                this.$message.success("获取未读信息成功！");
+                                this.unread = response.data.data.unread
+                            } else {
+                                this.$message.error(response.data.msg)
+                            }
+                        }
+                    )
+            },
             handleClick(e) {
                 console.log('click ', e);
                 this.stockid = null;

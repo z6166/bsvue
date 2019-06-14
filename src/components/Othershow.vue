@@ -7,6 +7,8 @@
         <ChatBox
             v-if="this.chatvisible"
             :aid="this.nowid"
+            :username="this.data.username"
+            :face="this.data.face"
             :visible="chatvisible"
             @cancel="closechat"></ChatBox>
         <div class="Othershow" style="font-size: medium;text-align:center;">
@@ -33,12 +35,13 @@
         props:["uid","visible"],
         data() {
             return {
+                nowid:"",
                 chatvisible:false,
                 data: {
-                    nowid:"",
                     email: null,
                     username: null,
                     name: null,
+                    face:null,
                 },
                 imageUrl: '',
             }
