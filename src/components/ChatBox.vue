@@ -20,9 +20,6 @@
                     </a-tooltip>
                 </a-comment>
                 <a-comment v-else>
-                    <a-tooltip slot="datetime">
-                        <span>{{item.time}}</span>
-                    </a-tooltip>
                     <p slot="content" style="float:right;background-color:lightcyan;padding:0 5px;">{{item.content}}</p>
                 </a-comment>
             </div>
