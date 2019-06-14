@@ -32,7 +32,7 @@
                                 </a-card-meta>
                                 <a-divider/>
                                 <h3>内容简介：</h3>
-                                <p v-if="book.content !== ''">发布者未填写内容简介</p>
+                                <p v-if="book.content === 'undefined'">发布者未填写内容简介</p>
                                 <p v-else>{{book.content}}</p>
                             </div>
                         </div>
