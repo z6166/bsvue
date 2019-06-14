@@ -1,17 +1,17 @@
 <template>
     <a-modal
             :visible="visible"
-            :title='"Chat to " + username'
+            :title='"Chat to " + data.username'
             @cancel="() => { $emit('cancel') }"
             :footer="null"
     >
         <div id="msgarea" class="chat-box">
             <div v-for="(item,index) in msgList" :key="index">
                 <a-comment v-if="item.uid.toString() !== $cookies.get('uid')">
-                    <a slot="author">{{username}}</a>
+                    <a slot="author">{{data.username}}</a>
                     <a-avatar
-                            :src="face"
-                            :alt="username"
+                            :src="data.face"
+                            :alt="data.username"
                             slot="avatar"
                     />
                     <p slot="content" style="float:left;background-color:lightcyan;padding:0 5px;">{{item.content}}</p>
@@ -37,9 +37,15 @@
 
     export default {
         name: "ChatBox",
-        props: ["aid", "visible","username","face"],
+        props: ["aid", "visible"],
         data() {
             return {
+                data: {
+                    email: null,
+                    username: null,
+                    name: null,
+                    face:null,
+                },
                 msg: '',
                 to: '',
                 ws: '',
@@ -50,6 +56,12 @@
             msgList: 'scrollToBottom'
         },
         mounted() {
+            if(this.$props.aid === this.$cookies.get("uid"))
+            {
+                this.$message.error("你不能和自己聊天！");
+                this.$emit("cancel")
+            }
+            this.init();
             if (!this.$cookies.isKey('token')) {
                 this.$message.error("请先登录系统！");
                 this.$emit('cancel')
@@ -87,6 +99,19 @@
             };
         },
         methods: {
+            init() {
+                this.$axios
+                    .get("http://" + this.baseurl + "/api/userinfo/" + this.$props.aid)
+                    .then(
+                        response => {
+                            if (response.data.code === 0) {
+                                this.data = response.data.data
+                            } else {
+                                this.$message.error(response.data.msg);
+                            }
+                        }
+                    )
+            },
             scrollToBottom() {
                 this.$nextTick(() => {
                     var div = document.getElementById('msgarea');

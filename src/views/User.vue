@@ -44,7 +44,7 @@
         <div class="right">
             <br/>
             <br/>
-            <component @changeview="changeview" :is="currentView"></component>
+            <component @readed="changeunread" @changeview="changeview" :is="currentView"></component>
         </div>
     </div>
 </template>
@@ -68,7 +68,7 @@
         },
         data() {
             return {
-                unread:"",
+                unread:null,
                 stockid:null,
                 current: '0',
                 arr: [
@@ -94,13 +94,15 @@
             }
         },
         methods: {
+            changeunread(data){
+                this.unread-=data
+            },
             getmesasge(){
                 this.$axios
                     .get("http://"+this.baseurl+"/api/msgcount")
                     .then(
                         response => {
                             if (response.data.code === 0) {
-                                this.$message.success("获取未读信息成功！");
                                 this.unread = response.data.data.unread
                             } else {
                                 this.$message.error(response.data.msg)

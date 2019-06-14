@@ -7,8 +7,6 @@
         <ChatBox
             v-if="this.chatvisible"
             :aid="this.nowid"
-            :username="this.data.username"
-            :face="this.data.face"
             :visible="chatvisible"
             @cancel="closechat"></ChatBox>
         <div class="Othershow" style="font-size: medium;text-align:center;">
