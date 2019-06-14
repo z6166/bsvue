@@ -1,14 +1,14 @@
 //登录
 
 <template>
-    <div class="Search" id="Search">
+    <div class="Search" id="Search" style="text-align: center">
         <a-input-group compact>
             <a-select v-model="searchselect" defaultValue="0">
                 <a-select-option value="0">书名</a-select-option>
                 <a-select-option value="1">编号</a-select-option>
                 <a-select-option value="2">类别</a-select-option>
             </a-select>
-            <a-input v-model="searchcontent" @pressEnter="searchevent" style="width: 90%">
+            <a-input v-model="searchcontent" @pressEnter="searchevent" style="width: 60%;">
                 <a-icon slot="suffix" type="search" @click="searchevent"></a-icon>
             </a-input>
         </a-input-group>

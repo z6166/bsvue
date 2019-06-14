@@ -1,17 +1,17 @@
 <template>
     <a-modal
             :visible="visible"
-            :title='"Chat to " + data.username'
+            :title='"Chat to " + data.name'
             @cancel="() => { $emit('cancel') }"
             :footer="null"
     >
         <div id="msgarea" class="chat-box">
             <div v-for="(item,index) in msgList" :key="index">
                 <a-comment v-if="item.uid.toString() !== $cookies.get('uid')">
-                    <a slot="author">{{data.username}}</a>
+                    <a slot="author">{{data.name}}</a>
                     <a-avatar
                             :src="data.face"
-                            :alt="data.username"
+                            :alt="data.name"
                             slot="avatar"
                     />
                     <p slot="content" style="float:left;background-color:lightcyan;padding:0 5px;">{{item.content}}</p>
@@ -56,7 +56,7 @@
             msgList: 'scrollToBottom'
         },
         mounted() {
-            if(this.$props.aid === this.$cookies.get("uid"))
+            if(this.$props.aid.toString() === this.$cookies.get("uid"))
             {
                 this.$message.error("你不能和自己聊天！");
                 this.$emit("cancel")
@@ -82,6 +82,7 @@
             };
             // 接收到消息时触发
             this.ws.onmessage = (evt) => {
+                console.log(evt.data);
                 var obj = JSON.parse(evt.data);
                 if (obj.code === 0) {
                     for (var j = obj.data.length - 1; j >= 0; j--) {
@@ -105,7 +106,10 @@
                     .then(
                         response => {
                             if (response.data.code === 0) {
-                                this.data = response.data.data
+                                this.data = response.data.data;
+                                if(this.data.name === ""){
+                                    this.data.name = "用户:" + this.data.username
+                                }
                             } else {
                                 this.$message.error(response.data.msg);
                             }
@@ -126,20 +130,17 @@
                     }));
             },
             send() {
+                if(this.msg === ""){
+                    this.$message.error("请填写内容");
+                    return
+                }
                 this.ws.send(
                     JSON.stringify({
                         action: "send",
                         msg: this.msg,
                         aid: this.$props.aid.toString()
                     }));
-                var unit = {
-                    content: this.msg,
-                    uid: this.$cookies.get("uid"),
-                    time: "123"
-                };
-                this.msgList.push(unit);
                 this.msg = '';
-                tobottom();
             }
         },
         // 关闭连接
