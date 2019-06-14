@@ -88,7 +88,9 @@
                 },
                 contentStyleObj:{
                     width:'',
-                    "margin":"auto"
+                    "margin":"auto",
+                    "padding-top":"40px",
+                    "padding-bottom":"40px"
                 },
                 bookname: "",
                 bookurl: "",
