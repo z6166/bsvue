@@ -18,9 +18,9 @@
             <br/>
             <p>邮箱：{{ this.data.email }}</p>
             <br/>
-            <p style="display:inline;" v-if="this.data.name!==''">昵称：{{this.data.name}} </p>
-            <p style="display:inline;" v-else>昵称：Undefined </p>
-            <a-button @click="showchat($props.uid)">聊天</a-button>
+            <p v-if="this.data.name!==''">昵称：{{this.data.name}} </p>
+            <p v-else>昵称：Undefined </p>
+            <a-button type="primary" @click="showchat($props.uid)">聊天</a-button>
         </div>
     </a-modal>
 </template>

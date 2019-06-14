@@ -2,7 +2,7 @@
     <div class="home" :style="contentStyleObj">
         <Search></Search>
         <h1>最新上架</h1>
-        <div style="background-color: #ececec; padding: 20px;">
+        <div style="background-color: #ececec; padding: 20px;overflow: hidden">
             <div v-for="(book,i) in books">
                 <router-link :to="'/book/show/'+ book.bookid" style="padding: 0 10px">
                     <a-card
