@@ -35,10 +35,10 @@
                 </a-dropdown>
             </a-menu>
         </a-layout-header>
-        <a-layout-content style="padding: 0 50px">
+        <a-layout-content style="padding: 0 10px">
             <br/>
             <br/>
-            <div :style="{ background: '#fff', padding: '24px', minHeight: '280px' }">
+            <div :style="{ background: '#fff', padding: '10px', minHeight: '280px' }">
                 <router-view></router-view>
             </div>
         </a-layout-content>
