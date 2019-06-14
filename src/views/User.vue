@@ -15,11 +15,11 @@
                     个人信息
                 </a-menu-item>
                 <a-menu-item key="1">
-                    <a-icon type="user"/>
+                    <a-icon type="wallet" />
                     我买到的
                 </a-menu-item>
                 <a-menu-item key="2">
-                    <a-icon type="user"/>
+                    <a-icon type="wallet" />
                     我卖出的
                 </a-menu-item>
                 <a-sub-menu key="sub1">
