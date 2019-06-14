@@ -93,7 +93,7 @@
                 console.log(this.searchselect);
 
                 this.$axios
-                    .get(this.baseurl+"/api/search", {
+                    .get("http://" + this.baseurl +"/api/search", {
                         params: {
                             type: this.searchselect,
                             content:this.searchcontent

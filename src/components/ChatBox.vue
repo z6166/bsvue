@@ -51,7 +51,7 @@
                 this.$message.error("请先登录系统！");
                 this.$emit('cancel')
             }
-            this.ws = new WebSocket('ws://127.0.0.1:8000/api/chat');
+            this.ws = new WebSocket("ws://" + this.baseurl + "/api/chat");
             // 连接打开时触发
             this.ws.onopen = () => {
                 console.log("Connection open ...");

@@ -133,7 +133,7 @@
                         data.append("email", values.email);
                         data.append("password", values.password);
                         this.$axios
-                            .post(this.baseurl+"/api/register", data)
+                            .post("http://"+this.baseurl+"/api/register", data)
                             .then(
                                 response => {
                                     if (response.data.code === 0) {

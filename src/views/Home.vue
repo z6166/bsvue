@@ -71,7 +71,7 @@
         methods: {
             getbooklist() {
                 this.$axios
-                    .get(this.baseurl + "/api/info", {
+                    .get("http://" + this.baseurl + "/api/info", {
                         params: {
                             num: 10,
                             reserve: 1

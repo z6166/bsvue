@@ -118,7 +118,7 @@
             },
             getbookinfo() {
                 this.$axios
-                    .get(this.baseurl+"/book/show/" + this.$route.params.id)
+                    .get("http://" + this.baseurl+"/book/show/" + this.$route.params.id)
                     .then(
                         response => {
                             if (response.data.code === 0) {

@@ -56,7 +56,7 @@
             },
             init() {
                 this.$axios
-                    .get(this.baseurl + "/api/userinfo/" + this.$props.uid)
+                    .get("http://" + this.baseurl + "/api/userinfo/" + this.$props.uid)
                     .then(
                         response => {
                             if (response.data.code === 0) {

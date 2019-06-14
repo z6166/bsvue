@@ -67,7 +67,7 @@
                 let data = new FormData();
                 data.append("newname", this.newname);
                 this.$axios
-                    .post(this.baseurl + "/api/changename", data)
+                    .post("http://" + this.baseurl + "/api/changename", data)
                     .then(
                         response => {
                             if (response.data.code === 0) {
@@ -100,7 +100,7 @@
             },
             init() {
                 this.$axios
-                    .get(this.baseurl + "/api/userinfo/" + this.$cookies.get("uid"))
+                    .get("http://" + this.baseurl + "/api/userinfo/" + this.$cookies.get("uid"))
                     .then(
                         response => {
                             if (response.data.code === 0) {
@@ -121,7 +121,7 @@
                     let data = new FormData();
                     data.append("imageUrl", this.imageUrl);
                     this.$axios
-                        .post(this.baseurl + "/api/changeface", data)
+                        .post("http://" + this.baseurl + "/api/changeface", data)
                         .then(
                             response => {
                                 if (response.data.code === 0) {

@@ -100,7 +100,7 @@
                 let data = new FormData();
                 data.append("orderid", orderid);
                 this.$axios
-                    .post(this.baseurl + "/api/scom", data)
+                    .post("http://" + this.baseurl + "/api/scom", data)
                     .then(
                         response => {
                             if (response.data.code === 0) {
@@ -115,7 +115,7 @@
             },
             sinit() {
                 this.$axios
-                    .get(this.baseurl + "/api/mysell")
+                    .get("http://" + this.baseurl + "/api/mysell")
                     .then(
                         response => {
                             if (response.data.code === 0) {

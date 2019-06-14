@@ -100,7 +100,7 @@
                 let data = new FormData();
                 data.append("orderid", orderid);
                 this.$axios
-                    .post(this.baseurl + "/api/bcom", data)
+                    .post("http://" + this.baseurl + "/api/bcom", data)
                     .then(
                         response => {
                             if (response.data.code === 0) {
@@ -115,7 +115,7 @@
             },
             binit() {
                 this.$axios
-                    .get(this.baseurl + "/api/myorder")
+                    .get("http://" + this.baseurl + "/api/myorder")
                     .then(
                         response => {
                             if (response.data.code === 0) {

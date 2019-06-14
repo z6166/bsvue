@@ -130,7 +130,7 @@
             bookinfo() {
                 this.bookid_tmp = this.$route.params.id;
                 this.$axios
-                    .get(this.baseurl+"/book/show/" + this.$route.params.id)
+                    .get("http://" + this.baseurl +"/book/show/" + this.$route.params.id)
                     .then(
                         response => {
                             if (response.data.code === 0) {
@@ -159,7 +159,7 @@
                             data.append("address", values.address);
                         }
                         this.$axios
-                            .post(this.baseurl+"/api/createorder", data)
+                            .post("http://" + this.baseurl +"/api/createorder", data)
                             .then(
                                 response => {
                                     if (response.data.code === 0) {

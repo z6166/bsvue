@@ -208,7 +208,7 @@
                         data.append("bookurl", values.bookurl);
                         data.append("pic", this.imageUrl);
                         this.$axios
-                            .post(this.baseurl+"/book/add", data)
+                            .post("http://" + this.baseurl+"/book/add", data)
                             .then(
                                 response => {
                                     if (response.data.code === 0) {

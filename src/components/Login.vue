@@ -109,7 +109,7 @@
                         data.append("username", values.userName);
                         data.append("password", values.password);
                         this.$axios
-                            .post(this.baseurl+"/api/login",data)
+                            .post("http://" + this.baseurl +"/api/login",data)
                             .then(
                                 response => {
                                     if (response.data.code === 0) {
