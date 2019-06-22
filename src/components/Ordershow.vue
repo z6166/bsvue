@@ -6,8 +6,9 @@
                 :visible="visible"
                 @cancel="closeother"></Othershow>
         <a-table :columns="columns" :dataSource="data">
-            <div slot="salerid" slot-scope="text">
-                <a  @click="showModal(text)">卖家</a>
+            <div slot="salerid" slot-scope="text,record">
+                <a v-if="record.name !== ''"  @click="showModal(text)">{{record.name}}</a>
+                <a v-else  @click="showModal(text)">用户：{{record.username}}</a>
             </div>
             <div slot="ordertime" slot-scope="text">
                 <p>{{getTime(text)}}</p>
@@ -25,7 +26,8 @@
                 <a-icon v-else style="color: red" type="clock-circle"/>
             </div>
             <div slot="bookid" slot-scope="text">
-                <router-link :to="'/book/show/'+ text">前往</router-link>
+                <router-link v-if="text !== 0" :to="'/book/show/'+ text">前往</router-link>
+                <p v-else>无</p>
             </div>
         </a-table>
     </div>

@@ -36,7 +36,9 @@
                             类型：{{ this.category }}
                             <p v-if="this.state === 0">可购买</p>
                             <p v-else>已售出</p>
-                            <a @click="showModal()">卖家信息</a>
+                            <p style="display: inline">卖家:</p>
+                            <a v-if="this.name !== ''"  @click="showModal()">{{this.name}}</a>
+                            <a v-else  @click="showModal()">用户：{{this.username}}</a>
                             <br/>
                             <a :href="this.bookurl">外部链接</a>
                         </template>
@@ -100,7 +102,9 @@
                 priceori: "",
                 pricenow: "",
                 uid: "",
-                state: ""
+                state: "",
+                username:"",
+                name:""
             }
         },
         created(){
@@ -133,6 +137,8 @@
                                 this.pic = response.data.data.pic;
                                 this.priceori = response.data.data.priceori;
                                 this.pricenow = response.data.data.pricenow;
+                                this.username = response.data.data.username;
+                                this.name = response.data.data.name;
                             } else {
                                 this.$message.error(response.data.msg);
                             }

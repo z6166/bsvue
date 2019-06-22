@@ -43,7 +43,13 @@
                             <a-select-option value="1">线下交易</a-select-option>
                         </a-select>
                     </a-form-item>
-                    <a-form-item v-if="ordertype==='0'" label="收货地址" :label-col="labelCol" :wrapper-col="wrapperCol">
+                    <a-form-item
+                            v-if="ordertype==='0'"
+                            label="收货地址"
+                            :label-col="labelCol"
+                            :wrapper-col="wrapperCol"
+                            :validate-status="addressError() ? 'error' : ''"
+                            :help="addressError() || ''">
                         <a-input
                                 v-decorator="[
                 'address',
@@ -51,6 +57,7 @@
                     rules:
                         [
                             {
+                                required: true,
                                 message: '请正确输入收货地址！',
                                 min:6
                             }
@@ -83,15 +90,15 @@
     export default {
         name: "OrderCreate",
         components: {ARow, AFormItem},
-        beforeCreate() {
-            this.form = this.$form.createForm(this);
-            this.form.hideRequiredMark = true
-        },
         mounted(){
             if (!this.$cookies.isKey('token')) {
                 this.$message.error("请先登录系统！");
                 this.$router.push('/');
-            }
+            };
+            this.$nextTick(() => {
+                // To disabled submit button at the beginning.
+                this.form.validateFields();
+            });
             this.bookinfo();
         },
         created(){
@@ -100,6 +107,7 @@
         },
         data() {
             return {
+                form: this.$form.createForm(this),
                 imgStyle: {
                     height: ""
                 },
@@ -129,6 +137,10 @@
             };
         },
         methods: {
+            addressError() {
+                const {getFieldError, isFieldTouched} = this.form;
+                return isFieldTouched('address') && getFieldError('address') && this.ordertype === '0';
+            },
             bookinfo() {
                 this.bookid_tmp = this.$route.params.id;
                 this.$axios
@@ -149,7 +161,7 @@
                 e.preventDefault();
                 this.form.validateFields((err, values) => {
                     if (!err) {
-                        if(this.ordertype === '0' && values.address.length<6){
+                        if(this.ordertype === '0' && values.address === ""){
                             this.$message.error("请正确填写收货地址！");
                             return;
                         }

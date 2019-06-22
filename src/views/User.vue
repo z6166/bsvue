@@ -23,22 +23,30 @@
                     <a-badge :count="this.unread">
                     </a-badge>
                 </a-menu-item>
-                <a-menu-item key="2">
-                    <a-icon type="wallet" />
-                    <span>我买到的</span>
-                </a-menu-item>
-                <a-menu-item key="3">
-                    <a-icon type="wallet" />
-                    <span>我卖出的</span>
-                </a-menu-item>
                 <a-sub-menu key="sub1">
                     <span slot="title"><a-icon type="bars"/><span>菜单</span></span>
+                    <a-menu-item key="2">
+                        <a-icon type="wallet" />
+                        <span>我买到的</span>
+                    </a-menu-item>
+                    <a-menu-item key="3">
+                        <a-icon type="wallet" />
+                        <span>我卖出的</span>
+                    </a-menu-item>
+                    <a-menu-item key="6">
+                        <a-icon type="wallet" />
+                        <span>我的求购</span>
+                    </a-menu-item>
                     <a-menu-item key="4">
-                        <a-icon type="search"/>
+                        <a-icon type="book" />
                         <span>发布图书</span>
                     </a-menu-item>
+                    <a-menu-item key="5">
+                        <a-icon type="search"/>
+                        <span>发布求购</span>
+                    </a-menu-item>
                 </a-sub-menu>
-                <a-menu-item key="5">
+                <a-menu-item key="7">
                     <a-icon type="setting"/>
                     <span>设置</span>
                 </a-menu-item>
@@ -65,6 +73,8 @@
     import Ordershow from "../components/Ordershow"
     import Sellshow from "../components/Sellshow"
     import Message from "../components/Message"
+    import Wantedadd from "../components/Wantedadd"
+    import Wantedshow from "../components/Wantedshow"
 
     export default {
         name: 'user',
@@ -74,6 +84,8 @@
             Ordershow,
             Sellshow,
             Bookadd,
+            Wantedadd,
+            Wantedshow,
             Websetting,
         },
         data() {
@@ -88,6 +100,8 @@
                     "Ordershow",
                     "Sellshow",
                     'Bookadd',
+                    "Wantedadd",
+                    "Wantedshow",
                     'Websetting',
                 ],
             }
