@@ -13,7 +13,7 @@
             </a-input>
         </a-input-group>
         <br/>
-        <a-table :columns="columns" :dataSource="data" :pagination="pagination">
+        <a-table :columns="columns" :dataSource="data" :pagination="pagination" :scroll="{ x: true }">
             <div slot="goto" slot-scope="record">
                 <router-link :to="'/book/show/'+ record.bookid">前往详情页</router-link>
             </div>
@@ -33,17 +33,23 @@
 <script>
     const columns = [ {
         title: "编号",
+        width: 100,
         dataIndex: 'bookid',
         key: 'bookid',
+        fixed: 'left'
     }, {
         title: '缩略图',
+        width: 100,
         dataIndex: 'pic',
         key: 'pic',
         scopedSlots: {customRender: 'pic'},
+        fixed: 'left'
     }, {
         title: '书名',
+        width: 100,
         dataIndex: 'bookname',
         key: 'bookname',
+        fixed: 'left'
     }, {
         title: '类别',
         dataIndex: 'category',
@@ -59,7 +65,9 @@
         scopedSlots: {customRender: 'state'},
     },{
         title: '',
+        width: 100,
         scopedSlots: {customRender: 'goto'},
+        fixed: 'right'
     }];
     var Searchresult = [];
     export default {
@@ -114,4 +122,5 @@
 </script>
 
 <style scoped>
+    .ant-table td { white-space: nowrap; }
 </style>

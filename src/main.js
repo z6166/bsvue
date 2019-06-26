@@ -12,6 +12,8 @@ import util from './utils'
 
 import VueCookies from 'vue-cookies'
 
+import 'lib-flexible'
+
 Vue.use(VueCookies);
 
 Vue.use(Antd);

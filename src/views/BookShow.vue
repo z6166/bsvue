@@ -108,7 +108,7 @@
             }
         },
         created(){
-            this.contentStyleObj.width=window.screen.width/2-200+'px';
+            this.contentStyleObj.width=window.screen.width/3+'px';
             this.imgStyle.height = (window.screen.width / 2) / 4 + 'px';
         },
         mounted() {

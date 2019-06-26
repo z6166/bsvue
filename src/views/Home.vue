@@ -47,7 +47,6 @@
             <div v-for="(book,i) in books">
                 <router-link :to="'/book/show/'+ book.bookid" style="padding: 0 10px">
                     <a-card
-                            hoverable
                             :bordered=false
                             :hoverable=true
                     >
@@ -66,7 +65,7 @@
                                         style="width: 100%"
                                 />
                             </div>
-                            <div class="right">
+                            <div class="right" style="overflow: hidden;height: 300px">
                                 <a-card-meta>
                                     <h1 slot="title" style="display:inline;">{{ book.bookname }}</h1>
                                     <template slot="description">价格：{{ book.pricenow }}￥</template>
@@ -134,9 +133,6 @@
                     showTotal: total => `Total ${total} items`, // 显示总数
                     showSizeChange: (current, pageSize) => this.pageSize = pageSize, // 改变每页数量时更新显示
                 },
-                imgStyle: {
-                    height: ""
-                },
                 contentStyleObj: {
                     width: '',
                     "margin": "auto",
@@ -152,8 +148,7 @@
             Search
         },
         created() {
-            this.contentStyleObj.width = window.screen.width / 2 - 200 + 'px';
-            this.imgStyle.height = (window.screen.width / 2) / 5 + 'px';
+            this.contentStyleObj.width = window.screen.width / 2  + 'px';
         },
         mounted() {
             this.init();

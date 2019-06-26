@@ -5,7 +5,7 @@ import User from './views/User.vue'
 import BookShow from './views/BookShow'
 import OrderCreate from "@/views/OrderCreate";
 
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
   mode: 'history',

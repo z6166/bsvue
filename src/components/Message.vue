@@ -15,7 +15,14 @@
                             @click="showchat(item.another_id,item.unread)"
                             :description="'未读记录:'+item.unread"
                     >
-                        <a slot="title">用户:{{item.another_id}}</a>
+                        <a-avatar
+                                :src="item.face"
+                                :alt="item.name"
+                                slot="avatar"
+                                size="large"
+                        />
+                        <a slot="title" v-if="item.name !== ''">{{item.name}}</a>
+                        <a slot="title" v-else>用户:{{item.username}}</a>
                     </a-list-item-meta>
             </a-list-item>
         </a-list>
